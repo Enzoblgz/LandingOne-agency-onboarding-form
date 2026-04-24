@@ -168,17 +168,53 @@ select option{background:#1c1c1c}
 .btn-nx svg,.btn-bk svg{width:14px;height:14px;flex-shrink:0}
 
 /* ═══ SUCCESS ═══ */
-.suc{display:none;flex-direction:column;align-items:center;text-align:center;padding:64px 28px 40px;max-width:520px;margin:0 auto;animation:fu .5s ease}
+.suc{display:none;flex-direction:column;align-items:flex-start;padding:56px 28px 80px;width:100%;max-width:760px;animation:fu .5s ease}
 .suc.on{display:flex}
-.suc-ring{width:66px;height:66px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
-.suc-ring svg{width:26px;height:26px;stroke:var(--gold)}
-.suc-ttl{font-family:'Playfair Display',serif;font-size:30px;margin-bottom:11px}
-.suc-sub{font-size:14px;color:var(--tm);line-height:1.7;margin-bottom:30px}
-.tl{width:100%;display:flex;flex-direction:column;gap:8px;text-align:left}
-.tl-r{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--s1);border:.5px solid var(--b0);border-radius:var(--r)}
-.tl-n{width:23px;height:23px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);font-weight:600;flex-shrink:0}
-.tl-t{font-size:13px;color:var(--tm)}
-.tl-t b{color:var(--t);font-weight:500}
+.suc-check{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.suc-check svg{width:20px;height:20px;stroke:var(--gold)}
+.suc-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:9px}
+.suc-ttl{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,36px);font-weight:500;line-height:1.2;margin-bottom:8px}
+.suc-sub{font-size:14px;color:var(--tm);line-height:1.78;margin-bottom:36px;max-width:560px}
+.suc-section-lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--tm);font-weight:600;margin-bottom:12px;margin-top:32px}
+/* recap */
+.suc-recap{width:100%;background:var(--s1);border:.5px solid var(--b0);border-radius:12px;overflow:hidden;margin-bottom:4px}
+.suc-recap-hd{padding:13px 18px;border-bottom:.5px solid var(--b0);display:flex;align-items:center;justify-content:space-between}
+.suc-recap-lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.suc-recap-date{font-size:11px;color:var(--th)}
+.suc-recap-body{display:grid;grid-template-columns:1fr 1fr}
+.suc-row{padding:11px 18px;border-bottom:.5px solid var(--b0);display:flex;flex-direction:column;gap:3px}
+.suc-row:nth-child(odd){border-right:.5px solid var(--b0)}
+.suc-row-k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--th);font-weight:500}
+.suc-row-v{font-size:13px;color:var(--t);line-height:1.4;word-break:break-word}
+.suc-recap-full{padding:11px 18px;border-top:.5px solid var(--b0)}
+/* timeline */
+.suc-tl{width:100%;display:flex;flex-direction:column;gap:0}
+.suc-tl-item{display:flex;align-items:flex-start;gap:16px;padding-bottom:22px;position:relative}
+.suc-tl-item:last-child{padding-bottom:0}
+.suc-tl-item::before{content:'';position:absolute;left:15px;top:33px;bottom:0;width:1px;background:rgba(200,169,110,.18)}
+.suc-tl-item:last-child::before{display:none}
+.suc-tl-dot{width:32px;height:32px;border-radius:50%;background:var(--gold-dim);border:.5px solid rgba(200,169,110,.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--gold);flex-shrink:0}
+.suc-tl-body{padding-top:6px}
+.suc-tl-when{font-size:10px;color:var(--gold);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.suc-tl-what{font-size:13px;color:var(--t);line-height:1.5}
+.suc-tl-what small{display:block;font-size:12px;color:var(--tm);margin-top:1px}
+/* contact options */
+.suc-contact{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.suc-cta{display:flex;align-items:center;gap:12px;padding:14px 16px;border:.5px solid var(--b0);border-radius:var(--r);background:var(--s1);text-decoration:none;transition:all .18s}
+.suc-cta:hover{border-color:var(--b-gold);background:var(--s2)}
+.suc-cta.primary{border-color:rgba(200,169,110,.4);background:var(--gold-dim)}
+.suc-cta-ic{width:34px;height:34px;border-radius:8px;background:rgba(200,169,110,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.suc-cta-ic svg{width:15px;height:15px;stroke:var(--gold)}
+.suc-cta-lbl{font-size:11px;color:var(--th);margin-bottom:1px}
+.suc-cta-val{font-size:13px;color:var(--t);font-weight:500;line-height:1.3}
+.suc-cta.primary .suc-cta-val{color:var(--gold-l)}
+.suc-note{font-size:11px;color:var(--th);margin-top:10px;line-height:1.6}
+@media(max-width:600px){
+  .suc{padding:40px 14px 60px}
+  .suc-recap-body{grid-template-columns:1fr}
+  .suc-row:nth-child(odd){border-right:none}
+  .suc-contact{grid-template-columns:1fr}
+}
 
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .btn-nx:disabled{opacity:.65;cursor:not-allowed}
@@ -624,15 +660,90 @@ select option{background:#1c1c1c}
 
 <!-- SUCCESS -->
 <div class="suc" id="suc">
-  <div class="suc-ring"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
-  <div class="suc-ttl">Brief envoyé !</div>
-  <div class="suc-sub">LandingOne agency vous remercie. Votre chargé de projet analyse votre dossier et vous contacte dans les 24h.</div>
-  <div class="tl">
-    <div class="tl-r"><div class="tl-n">1</div><div class="tl-t"><b>Aujourd'hui</b> — Confirmation par email</div></div>
-    <div class="tl-r"><div class="tl-n">2</div><div class="tl-t"><b>J+1</b> — Appel de cadrage si besoin (15 min)</div></div>
-    <div class="tl-r"><div class="tl-n">3</div><div class="tl-t"><b>J+3</b> — Première version du site en ligne</div></div>
-    <div class="tl-r"><div class="tl-n">4</div><div class="tl-t"><b>J+7</b> — Révisions &amp; validation finale</div></div>
+
+  <div class="suc-check"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <div class="suc-eyebrow">Brief reçu</div>
+  <div class="suc-ttl">Votre dossier est entre<br>de bonnes mains.</div>
+  <div class="suc-sub">LandingOne agency vous remercie pour votre confiance. Votre chargé de projet analyse votre brief et revient vers vous sous 24h pour démarrer la création.</div>
+
+  <!-- Récap -->
+  <div class="suc-section-lbl">Récapitulatif de votre brief</div>
+  <div class="suc-recap">
+    <div class="suc-recap-hd">
+      <span class="suc-recap-lbl">Brief LandingOne</span>
+      <span class="suc-recap-date" id="suc-date"></span>
+    </div>
+    <div class="suc-recap-body">
+      <div class="suc-row"><div class="suc-row-k">Nom</div><div class="suc-row-v" id="sr-nom">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Email</div><div class="suc-row-v" id="sr-mail">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Entreprise</div><div class="suc-row-v" id="sr-ent">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Téléphone</div><div class="suc-row-v" id="sr-tel">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Activité</div><div class="suc-row-v" id="sr-act">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Nom du site</div><div class="suc-row-v" id="sr-site">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Délai souhaité</div><div class="suc-row-v" id="sr-delai">—</div></div>
+      <div class="suc-row"><div class="suc-row-k">Sections activées</div><div class="suc-row-v" id="sr-secs">—</div></div>
+    </div>
+    <div class="suc-recap-full" style="border-top:.5px solid var(--b0)">
+      <div class="suc-row-k" style="margin-bottom:5px">Objectif principal</div>
+      <div class="suc-row-v" id="sr-obj" style="color:var(--tm);font-size:13px">—</div>
+    </div>
   </div>
+
+  <!-- Timeline -->
+  <div class="suc-section-lbl">Ce qui se passe maintenant</div>
+  <div class="suc-tl">
+    <div class="suc-tl-item">
+      <div class="suc-tl-dot">1</div>
+      <div class="suc-tl-body">
+        <div class="suc-tl-when">Aujourd'hui</div>
+        <div class="suc-tl-what">Brief reçu &amp; pris en charge<small>Votre dossier entre en file de production.</small></div>
+      </div>
+    </div>
+    <div class="suc-tl-item">
+      <div class="suc-tl-dot">2</div>
+      <div class="suc-tl-body">
+        <div class="suc-tl-when">J+1</div>
+        <div class="suc-tl-what">Contact de votre chargé de projet<small>Un point de 15 min si des clarifications sont nécessaires.</small></div>
+      </div>
+    </div>
+    <div class="suc-tl-item">
+      <div class="suc-tl-dot">3</div>
+      <div class="suc-tl-body">
+        <div class="suc-tl-when">J+3</div>
+        <div class="suc-tl-what">Première version du site en ligne<small>Lien de prévisualisation envoyé par email.</small></div>
+      </div>
+    </div>
+    <div class="suc-tl-item">
+      <div class="suc-tl-dot">4</div>
+      <div class="suc-tl-body">
+        <div class="suc-tl-when">J+7</div>
+        <div class="suc-tl-what">Révisions &amp; validation finale<small>Jusqu'à 3 allers-retours inclus.</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <div class="suc-section-lbl">Une question entre-temps ?</div>
+  <div class="suc-contact">
+    <a class="suc-cta primary" href="mailto:contact@landingone.fr">
+      <div class="suc-cta-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <div><div class="suc-cta-lbl">Email direct</div><div class="suc-cta-val">contact@landingone.fr</div></div>
+    </a>
+    <a class="suc-cta" href="tel:+33600000000">
+      <div class="suc-cta-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <div><div class="suc-cta-lbl">Téléphone</div><div class="suc-cta-val">+33 6 00 00 00 00</div></div>
+    </a>
+    <a class="suc-cta" href="https://calendly.com/landingone" target="_blank">
+      <div class="suc-cta-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div><div class="suc-cta-lbl">Prendre rendez-vous</div><div class="suc-cta-val">Réserver un créneau</div></div>
+    </a>
+    <a class="suc-cta" href="https://instagram.com/landingone" target="_blank">
+      <div class="suc-cta-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+      <div><div class="suc-cta-lbl">Instagram</div><div class="suc-cta-val">@landingone</div></div>
+    </a>
+  </div>
+  <p class="suc-note">Réponse garantie sous 24h ouvrées · Toutes vos données sont traitées de manière confidentielle.</p>
+
 </div>
 
 <!-- FOOTER -->
@@ -961,7 +1072,11 @@ function secSummary(){
 // ▶ ÉTAPE 2 : Créer un nouveau formulaire → copier l'endpoint
 // ▶ ÉTAPE 3 : Remplacer l'URL ci-dessous par ton endpoint
 //   Ex : https://formspree.io/f/xpwzabcd
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgaznnr';
+// ▶ Web3Forms — gratuit, sans restriction de domaine
+// ▶ Récupère ta clé sur https://web3forms.com (entre ton email, copie la clé)
+// ▶ Remplace la valeur ci-dessous par ta clé
+const FORMSPREE_ENDPOINT = 'https://api.web3forms.com/submit';
+const WEB3FORMS_KEY = '9ea23518-3c17-4f63-a392-980028ec6ecb';
 
 async function submit(){
   const secs = secSummary();
@@ -1051,13 +1166,29 @@ Brief généré le ${new Date().toLocaleDateString('fr-FR',{weekday:'long',year:
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        _subject: '🚀 Nouveau brief — ' + (gv('f_sitenom') || gv('f_nom')),
-        _replyto: gv('f_mail'),
-        brief: brief
+        access_key: WEB3FORMS_KEY,
+        subject: '🚀 Nouveau brief — ' + (gv('f_sitenom') || gv('f_nom')),
+        from_name: gv('f_nom'),
+        replyto: gv('f_mail'),
+        message: brief
       })
     });
 
     if(!res.ok) throw new Error('HTTP ' + res.status);
+
+    // — Peupler le récap
+    const fill = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val || '—'; };
+    fill('sr-nom',  gv('f_nom'));
+    fill('sr-mail', gv('f_mail'));
+    fill('sr-ent',  gv('f_ent') || '—');
+    fill('sr-tel',  gv('f_tel') || '—');
+    fill('sr-act',  gv('f_act'));
+    fill('sr-site', gv('f_sitenom'));
+    fill('sr-delai', gc('ch_delai'));
+    fill('sr-obj',  gv('f_obj'));
+    const secsOn = [...document.querySelectorAll('.sec-card.on')].map(c => c.querySelector('.sec-title')?.textContent).filter(Boolean);
+    fill('sr-secs', secsOn.length ? secsOn.join(', ') : '—');
+    document.getElementById('suc-date').textContent = new Date().toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'});
 
     // — Succès : afficher l'écran de confirmation
     document.getElementById('p'+cur).classList.remove('on');

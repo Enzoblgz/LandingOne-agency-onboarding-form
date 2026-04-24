@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LandingOne — Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#c8a96e;--gold-l:#dfc08a;--gold-dim:rgba(200,169,110,0.12);
+  --bg:#0b0b0b;--s1:#141414;--s2:#1c1c1c;--s3:#222;
+  --b0:rgba(255,255,255,0.06);--b1:rgba(255,255,255,0.1);--b-gold:rgba(200,169,110,0.3);
+  --t:#f0ede8;--tm:rgba(240,237,232,0.5);--th:rgba(240,237,232,0.22);
+  --red:#d95f5f;--green:#5fba7d;--r:8px
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-bottom:120px}
+
+/* ═══ HEADER ═══ */
+.hdr{width:100%;padding:22px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:.5px solid var(--b0);position:sticky;top:0;background:rgba(11,11,11,.95);backdrop-filter:blur(16px);z-index:200}
+.logo{font-family:'Playfair Display',serif;font-size:19px;font-weight:500}
+.logo em{color:var(--gold);font-style:normal}
+.hdr-right{display:flex;align-items:center;gap:20px}
+.dots{display:flex;gap:5px;align-items:center}
+.dot{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,0.13);transition:all .3s}
+.dot.a{background:var(--gold);width:20px}
+.dot.d{background:rgba(200,169,110,.38)}
+.pg-lbl{font-size:11px;color:var(--tm);letter-spacing:.06em}
+.pbar{width:100%;height:1.5px;background:rgba(255,255,255,.04)}
+.pfill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+/* ═══ WRAP ═══ */
+.wrap{width:100%;max-width:760px;padding:0 28px;margin-top:56px}
+
+/* ═══ STEP ═══ */
+.step{display:none}
+.step.on{display:block;animation:fu .38s ease}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ TYPOGRAPHY ═══ */
+.eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:9px}
+.ttl{font-family:'Playfair Display',serif;font-size:clamp(26px,3.8vw,36px);font-weight:500;line-height:1.2;margin-bottom:10px}
+.intro{font-size:14px;color:var(--tm);line-height:1.78;margin-bottom:30px;max-width:620px}
+.intro b{color:var(--t);font-weight:500}
+.div{border:none;border-top:.5px solid var(--b0);margin:26px 0}
+.sub-hd{font-size:13px;color:var(--tm);line-height:1.6;padding:11px 14px;border-left:2px solid var(--gold);background:var(--gold-dim);border-radius:0 6px 6px 0;margin-bottom:18px}
+
+/* ═══ FIELDS ═══ */
+.fields{display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--tm);font-weight:500}
+.req{color:var(--gold);margin-left:2px}
+.hint{font-size:11px;color:var(--th);margin-top:2px;line-height:1.5}
+input[type=text],input[type=email],input[type=url],textarea,select{background:var(--s1);border:.5px solid var(--b1);border-radius:var(--r);padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--t);outline:none;transition:border-color .2s,background .2s;width:100%}
+input::placeholder,textarea::placeholder{color:var(--th);font-style:italic}
+input:focus,textarea:focus,select:focus{border-color:var(--b-gold);background:var(--s2)}
+input.err,textarea.err{border-color:var(--red)!important}
+textarea{resize:vertical;min-height:82px;line-height:1.55}
+select option{background:#1c1c1c}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ═══ ERROR ═══ */
+.ferr{font-size:11px;color:var(--red);margin-top:3px;display:none}
+.ferr.on{display:block}
+.perr{display:none;align-items:center;gap:9px;padding:11px 14px;background:rgba(217,95,95,.07);border:.5px solid rgba(217,95,95,.28);border-radius:var(--r);font-size:13px;color:var(--red);margin-bottom:18px}
+.perr.on{display:flex}
+.perr svg{width:15px;height:15px;stroke:var(--red);flex-shrink:0}
+
+/* ═══ RADIO CHOICE ═══ */
+.choices{display:flex;flex-direction:column;gap:8px}
+.ci{display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border:.5px solid var(--b0);border-radius:var(--r);cursor:pointer;transition:all .18s;background:var(--s1);user-select:none}
+.ci:hover{border-color:var(--b-gold);background:var(--s2)}
+.ci.sel{border-color:var(--gold);background:var(--gold-dim)}
+.ci-lt{width:20px;height:20px;border-radius:4px;border:.5px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--tm);flex-shrink:0;transition:all .18s}
+.ci.sel .ci-lt{background:var(--gold);border-color:var(--gold);color:#0b0b0b}
+.ci-tx{font-size:14px;color:var(--t);line-height:1.4;padding-top:1px}
+.choices.err .ci{border-color:rgba(217,95,95,.35)}
+
+/* ═══ CHECKBOXES ═══ */
+.checks{display:flex;flex-direction:column;gap:8px}
+.ck{display:flex;align-items:center;gap:11px;padding:10px 14px;border:.5px solid var(--b0);border-radius:var(--r);cursor:pointer;transition:all .18s;background:var(--s1);user-select:none;font-size:14px;color:var(--t)}
+.ck:hover{border-color:var(--b-gold);background:var(--s2)}
+.ck.on{border-color:var(--gold);background:var(--gold-dim)}
+.cb{width:17px;height:17px;border-radius:3px;border:.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.ck.on .cb{background:var(--gold);border-color:var(--gold)}
+.cb svg{display:none}
+.ck.on .cb svg{display:block}
+
+/* ═══ UPLOAD ═══ */
+.upzone{border:1px dashed rgba(255,255,255,.1);border-radius:var(--r);padding:22px 16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--s1)}
+.upzone:hover{border-color:var(--b-gold);background:var(--s2)}
+.upzone.done{border-color:var(--gold);border-style:solid}
+.up-ic{width:36px;height:36px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.up-ic svg{width:16px;height:16px;stroke:var(--gold)}
+.up-lbl{font-size:13px;color:var(--tm);line-height:1.5}
+.up-lbl b{color:var(--gold);font-weight:500}
+
+/* ═══ CONDITIONAL ═══ */
+.cond{display:none}
+.cond.on{display:block;animation:fu .25s ease;background:rgba(200,169,110,.03);border:.5px solid rgba(200,169,110,.13);border-radius:var(--r);padding:15px;margin-top:-6px}
+.cond .fields{gap:12px}
+
+/* ═══ INFOBOX ═══ */
+.ibox{padding:12px 15px;border-radius:var(--r);border:.5px solid rgba(200,169,110,.2);background:var(--gold-dim);font-size:13px;color:var(--tm);line-height:1.6}
+
+/* ═══ PAGE 4 — SECTIONS ═══ */
+.sec-list{display:flex;flex-direction:column;gap:10px}
+.sec-card{border:.5px solid var(--b0);border-radius:10px;background:var(--s1);overflow:hidden;transition:border-color .2s,opacity .2s}
+.sec-card.on{border-color:var(--gold)}
+.sec-card.off{opacity:.5}
+.sec-hd{display:flex;align-items:center;gap:12px;padding:13px 15px;cursor:pointer;user-select:none;transition:background .15s}
+.sec-hd:hover{background:rgba(255,255,255,.02)}
+/* toggle pill */
+.tog{width:36px;height:21px;border-radius:11px;background:rgba(255,255,255,.1);position:relative;flex-shrink:0;transition:background .2s}
+.tog::after{content:'';position:absolute;left:3px;top:3px;width:15px;height:15px;border-radius:50%;background:#555;transition:all .22s}
+.sec-card.on .tog{background:var(--gold)}
+.sec-card.on .tog::after{left:18px;background:#0b0b0b}
+.sec-title{font-size:14px;font-weight:500;color:var(--t);flex:1}
+.sec-tag{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--gold-dim);color:var(--gold);letter-spacing:.06em;text-transform:uppercase;flex-shrink:0}
+.sec-desc{font-size:12px;color:var(--th);padding:0 15px 5px 15px;line-height:1.5}
+.sec-body{padding:0 15px 14px;display:none}
+.sec-card.on .sec-body{display:block}
+/* params inside section */
+.param-group{margin-top:12px}
+.param-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--th);margin-bottom:7px}
+/* pill options — NO repeat selection (radio style) */
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{padding:5px 13px;border-radius:100px;border:.5px solid var(--b1);font-size:12px;color:var(--tm);cursor:pointer;transition:all .18s;background:transparent;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.pill:hover{border-color:var(--b-gold);color:var(--gold-l)}
+.pill.on{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+.sec-inp{background:var(--s2);border:.5px solid var(--b0);border-radius:6px;padding:8px 11px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--t);outline:none;width:100%;margin-top:6px;transition:border-color .2s}
+.sec-inp:focus{border-color:var(--b-gold)}
+.sec-ta{min-height:58px;resize:none}
+/* section ordering hint */
+.sec-order-hint{font-size:11px;color:var(--th);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.sec-order-hint svg{width:13px;height:13px;stroke:var(--th);flex-shrink:0}
+
+/* ═══ HOSTING ═══ */
+.h-cards{display:flex;flex-direction:column;gap:9px}
+.h-card{padding:15px 16px;border:.5px solid var(--b0);border-radius:var(--r);background:var(--s1);cursor:pointer;transition:all .18s;display:flex;align-items:flex-start;gap:12px}
+.h-card:hover{border-color:var(--b-gold)}
+.h-card.sel{border-color:var(--gold);background:var(--gold-dim)}
+.hck{width:19px;height:19px;border-radius:50%;border:.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .18s}
+.h-card.sel .hck{background:var(--gold);border-color:var(--gold)}
+.hck svg{display:none}
+.h-card.sel .hck svg{display:block}
+.h-name{font-size:14px;font-weight:500;color:var(--t);margin-bottom:3px}
+.h-desc{font-size:12px;color:var(--tm);line-height:1.5}
+
+/* ═══ RECAP (admin only) ═══ */
+.recap-wrap{background:var(--s1);border:.5px solid var(--b0);border-radius:var(--r);padding:20px}
+.recap-sec{margin-bottom:18px}
+.recap-sec:last-child{margin-bottom:0}
+.recap-sec-ttl{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px;padding-bottom:5px;border-bottom:.5px solid rgba(200,169,110,.18)}
+.r-row{display:flex;align-items:flex-start;gap:12px;padding:5px 0;border-bottom:.5px solid var(--b0)}
+.r-row:last-child{border-bottom:none}
+.r-k{font-size:11px;color:var(--th);width:160px;flex-shrink:0;padding-top:1px}
+.r-v{font-size:13px;color:var(--t);flex:1;word-break:break-word;line-height:1.5}
+
+/* ═══ FOOTER ═══ */
+.ftr{width:100%;max-width:760px;padding:0 28px;margin-top:38px;display:flex;align-items:center;justify-content:space-between}
+.btn-bk{padding:10px 20px;border-radius:var(--r);border:.5px solid rgba(255,255,255,.1);background:transparent;color:var(--tm);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px}
+.btn-bk:hover{color:var(--t);border-color:rgba(255,255,255,.2)}
+.btn-nx{padding:11px 28px;border-radius:var(--r);border:none;background:var(--gold);color:#0b0b0b;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px}
+.btn-nx:hover{background:var(--gold-l)}
+.btn-nx:active{transform:scale(.97)}
+.btn-nx svg,.btn-bk svg{width:14px;height:14px;flex-shrink:0}
+
+/* ═══ SUCCESS ═══ */
+.suc{display:none;flex-direction:column;align-items:center;text-align:center;padding:64px 28px 40px;max-width:520px;margin:0 auto;animation:fu .5s ease}
+.suc.on{display:flex}
+.suc-ring{width:66px;height:66px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.suc-ring svg{width:26px;height:26px;stroke:var(--gold)}
+.suc-ttl{font-family:'Playfair Display',serif;font-size:30px;margin-bottom:11px}
+.suc-sub{font-size:14px;color:var(--tm);line-height:1.7;margin-bottom:30px}
+.tl{width:100%;display:flex;flex-direction:column;gap:8px;text-align:left}
+.tl-r{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--s1);border:.5px solid var(--b0);border-radius:var(--r)}
+.tl-n{width:23px;height:23px;border-radius:50%;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);font-weight:600;flex-shrink:0}
+.tl-t{font-size:13px;color:var(--tm)}
+.tl-t b{color:var(--t);font-weight:500}
+
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.btn-nx:disabled{opacity:.65;cursor:not-allowed}
+@media(max-width:600px){
+  .hdr{padding:16px 16px}
+  .wrap,.ftr{padding:0 14px}
+  .g2{grid-template-columns:1fr}
+  .pg-lbl{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo">Landing<em>One</em></div>
+  <div class="hdr-right">
+    <div class="dots" id="dots"></div>
+    <div class="pg-lbl" id="pglbl">Page 1 sur 7</div>
+  </div>
+</header>
+<div class="pbar"><div class="pfill" id="pfill" style="width:14.2%"></div></div>
+
+<div class="wrap">
+
+<!-- ══════════════════════════ P1 — BIENVENUE ══════════════════════════ -->
+<div class="step on" id="p1">
+  <div class="eyebrow">Bienvenue — Page 1 sur 7</div>
+  <div class="ttl">Votre future site web<br>n'attend plus que vous</div>
+  <div class="intro">
+    LandingOne agency vous remercie de votre confiance.<br><br>
+    Pour une création de site rapide et optimisée, nous vous proposons de remplir ce rapide questionnaire. L'objectif ici est de nous transmettre en 1 fois votre vision et de supprimer tout le superflu lié au service client (allers retours incessants, appels inutiles, incompréhension etc.)<br><br>
+    Le processus est simple : vous complétez ce formulaire et recevez dans les 3 prochains jours une première version du site. Soyez le plus précis possible — chaque détail compte.
+  </div>
+  <hr class="div">
+  <p class="intro" style="margin-bottom:20px">Commençons par les informations générales :</p>
+  <div class="perr" id="pe1"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Merci de compléter les champs obligatoires.</div>
+  <div class="fields">
+    <div class="g2">
+      <div class="field">
+        <div class="lbl">Prénom & nom<span class="req">*</span></div>
+        <input type="text" id="f_nom" placeholder="Jean Dupont">
+        <div class="ferr" id="e_nom">Champ requis.</div>
+      </div>
+      <div class="field">
+        <div class="lbl">Nom de l'entreprise</div>
+        <input type="text" id="f_ent" placeholder="Acme SAS">
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl">Adresse email<span class="req">*</span></div>
+      <input type="email" id="f_mail" placeholder="jean@acme.fr">
+      <div class="ferr" id="e_mail">Email invalide.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Numéro de téléphone</div>
+      <input type="text" id="f_tel" placeholder="+33 6 12 34 56 78">
+    </div>
+    <div class="field">
+      <div class="lbl">Votre activité principale<span class="req">*</span></div>
+      <input type="text" id="f_act" placeholder="Ex : coach business, photographe, cabinet juridique...">
+      <div class="ferr" id="e_act">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Depuis combien de temps exercez-vous ?<span class="req">*</span></div>
+      <div class="choices" id="ch_exp">
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">A</div><div class="ci-tx">Je me lance (moins de 6 mois)</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">B</div><div class="ci-tx">1 à 3 ans d'expérience</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">C</div><div class="ci-tx">3 à 10 ans d'expérience</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">D</div><div class="ci-tx">Plus de 10 ans</div></div>
+      </div>
+      <div class="ferr" id="e_exp">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Avez-vous déjà eu un site web ?<span class="req">*</span></div>
+      <div class="choices" id="ch_ancsite">
+        <div class="ci" onclick="rc(this);sc('cd_ancsite',true)"><div class="ci-lt">A</div><div class="ci-tx">Oui</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_ancsite',false)"><div class="ci-lt">B</div><div class="ci-tx">Non, c'est ma première fois</div></div>
+      </div>
+      <div class="ferr" id="e_ancsite">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="cond" id="cd_ancsite">
+      <div class="fields">
+        <div class="field">
+          <div class="lbl">Lien de votre site actuel</div>
+          <input type="url" id="f_anclien" placeholder="https://monsite.fr">
+        </div>
+        <div class="field">
+          <div class="lbl">Qu'est-ce qui ne vous convient plus ?<span class="req">*</span></div>
+          <textarea id="f_ancpb" placeholder="Design vieillissant, pas de conversions, trop lent, ne reflète plus mon offre..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P2 — VISION ══════════════════════════ -->
+<div class="step" id="p2">
+  <div class="eyebrow">Votre Vision — Page 2 sur 7</div>
+  <div class="ttl">Votre Vision</div>
+  <div class="intro">
+    Nous vous prions de remplir les champs suivants avec une <b>grande attention</b>. Il ne s'agit pas ici de simplement nous fournir votre logo et d'écrire une description vide de sens.<br><br>
+    Ce qui se dissimule ici c'est l'ébauche, la face cachée derrière <b>la machine à convertir les clients que sera votre site</b>. Nous voulons adhérer à votre vision, à votre projet, nous mettre en phase avec lui pour vous permettre d'accomplir vos objectifs.
+  </div>
+  <div class="perr" id="pe2"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Merci de compléter les champs obligatoires.</div>
+  <hr class="div">
+  <p class="intro" style="margin-bottom:18px">Commençons par lui donner un nom, par le rendre véritablement tangible :</p>
+  <div class="fields">
+    <div class="field">
+      <div class="lbl">Nom du site<span class="req">*</span></div>
+      <input type="text" id="f_sitenom" placeholder="Votre Projet">
+      <div class="ferr" id="e_sitenom">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Objectif principal<span class="req">*</span></div>
+      <input type="text" id="f_obj" placeholder="LA chose essentielle à vos yeux">
+      <div class="ferr" id="e_obj">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">L'action que doit faire le visiteur du site<span class="req">*</span></div>
+      <input type="text" id="f_action" placeholder="Réserver un call, explorer vos créations...">
+      <div class="ferr" id="e_action">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Votre proposition de valeur unique<span class="req">*</span></div>
+      <textarea id="f_pvu" placeholder="Qu'est-ce qui vous différencie radicalement de vos concurrents ? Pourquoi vous et pas un autre ?" style="min-height:70px"></textarea>
+      <div class="hint">Ce texte servira de socle au copywriting de votre site.</div>
+      <div class="ferr" id="e_pvu">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Slogan ou accroche souhaitée</div>
+      <input type="text" id="f_slogan" placeholder="Ex : 'L'expertise au service de votre ambition'">
+      <div class="hint">Optionnel — laissez vide si vous souhaitez qu'on vous en propose un.</div>
+    </div>
+    <hr class="div">
+    <div class="sub-hd">Définissons votre avatar client : à qui s'adresse le site, pour mieux lui parler directement.</div>
+    <div class="g2">
+      <div class="field">
+        <div class="lbl">Âge de votre cible<span class="req">*</span></div>
+        <input type="text" id="f_age" placeholder="Ex : 30-50 ans">
+        <div class="ferr" id="e_age">Champ requis.</div>
+      </div>
+      <div class="field">
+        <div class="lbl">Profession / statut<span class="req">*</span></div>
+        <input type="text" id="f_prof" placeholder="Ex : dirigeant de PME, freelance, particulier...">
+        <div class="ferr" id="e_prof">Champ requis.</div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="field">
+        <div class="lbl">Revenu moyen<span class="req">*</span></div>
+        <input type="text" id="f_rev" placeholder="Ex : 3 500 € / mois">
+        <div class="ferr" id="e_rev">Champ requis.</div>
+      </div>
+      <div class="field">
+        <div class="lbl">Où se trouve votre cible ?</div>
+        <input type="text" id="f_geo_cible" placeholder="Ex : région parisienne, toute la France...">
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl">Problème principal que vous résolvez<span class="req">*</span></div>
+      <input type="text" id="f_pb" placeholder="Le problème n°1 de votre cible que vous résolvez">
+      <div class="ferr" id="e_pb">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Les solutions qu'il a sans vous<span class="req">*</span></div>
+      <input type="text" id="f_sans" placeholder="Concurrents, alternatives, statu quo...">
+      <div class="ferr" id="e_sans">Champ requis.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Pourquoi votre solution est meilleure ?<span class="req">*</span></div>
+      <textarea id="f_meilleur" placeholder="En quoi êtes-vous plus rapide, plus fiable, plus humain, moins cher ou plus qualitatif que les alternatives ?"></textarea>
+      <div class="ferr" id="e_meilleur">Champ requis.</div>
+    </div>
+    <hr class="div">
+    <div class="sub-hd">Positionnement — pour adapter le ton et le message du site.</div>
+    <div class="field">
+      <div class="lbl">Qualité du service<span class="req">*</span></div>
+      <div class="choices" id="ch_qual">
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">A</div><div class="ci-tx">Premium — je vise le haut de gamme</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">B</div><div class="ci-tx">Moyen de gamme — rapport qualité/prix optimal</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">C</div><div class="ci-tx">Très accessible — priorité au volume et à la démocratisation</div></div>
+      </div>
+      <div class="ferr" id="e_qual">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Zone géographique ciblée<span class="req">*</span></div>
+      <div class="choices" id="ch_zone">
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">A</div><div class="ci-tx">Locale</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">B</div><div class="ci-tx">Nationale</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">C</div><div class="ci-tx">Internationale</div></div>
+      </div>
+      <div class="ferr" id="e_zone">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Ton de communication souhaité<span class="req">*</span></div>
+      <div class="choices" id="ch_ton">
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">A</div><div class="ci-tx">Professionnel & formel</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">B</div><div class="ci-tx">Chaleureux & accessible</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">C</div><div class="ci-tx">Inspirant & ambitieux</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">D</div><div class="ci-tx">Direct & percutant</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">E</div><div class="ci-tx">Créatif & décalé</div></div>
+      </div>
+      <div class="ferr" id="e_ton">Veuillez sélectionner une option.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P3 — FONCTIONNALITÉS ══════════════════════════ -->
+<div class="step" id="p3">
+  <div class="eyebrow">Fonctionnalités — Page 3 sur 7</div>
+  <div class="ttl">Ce que votre site<br>doit faire</div>
+  <div class="intro">Explorons les fonctionnalités que nos équipes vont déployer. Nous les préciserons ensuite section par section.</div>
+  <div class="perr" id="pe3"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Merci de compléter les champs obligatoires.</div>
+  <div class="fields">
+    <div class="field">
+      <div class="lbl">Fonctionnalités de base souhaitées</div>
+      <div class="checks" id="ck_fonc">
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Barre de navigation (fortement recommandé)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Pied de page (fortement recommandé)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Hero — visuel d'accroche en haut de page (fortement recommandé)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Carte géographique intégrée</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Galerie photo / portfolio</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Section contact et réseaux sociaux</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Ajout d'une autre langue (site multilingue)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Formulaire de contact</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Prise de rendez-vous en ligne (Calendly ou équivalent)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Blog / espace articles</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>FAQ intégrée</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl">Fonctionnalités premium</div>
+      <div class="checks" id="ck_prem">
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Système de comptes / espace membres</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Intégration newsletter (Mailchimp, Brevo...)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Paiement en ligne via Stripe</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Chat en ligne / chatbot</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Pop-ups et bannières de conversion</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Connexion CRM (HubSpot, Notion...)</div>
+        <div class="ck" onclick="tc(this)"><div class="cb"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>Boutique e-commerce complète</div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="lbl">Autre fonctionnalité spécifique</div>
+      <input type="text" id="f_autrefonc" placeholder="Décrivez ici toute fonctionnalité non listée ci-dessus">
+    </div>
+    <hr class="div">
+    <div class="sub-hd">Délai & urgence — pour que nos équipes se calent sur vos impératifs.</div>
+    <div class="field">
+      <div class="lbl">Délai souhaité<span class="req">*</span></div>
+      <div class="choices" id="ch_delai">
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">A</div><div class="ci-tx">Urgent — moins de 7 jours</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">B</div><div class="ci-tx">2 semaines</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">C</div><div class="ci-tx">1 mois</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">D</div><div class="ci-tx">Pas de contrainte particulière</div></div>
+      </div>
+      <div class="ferr" id="e_delai">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Date de lancement idéale</div>
+      <input type="text" id="f_dateideal" placeholder="Ex : avant le 15 juin, pour un événement spécifique...">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P4 — RESSOURCES ══════════════════════════ -->
+<div class="step" id="p4">
+  <div class="eyebrow">Ressources — Page 4 sur 7</div>
+  <div class="ttl">Ressources déjà existantes</div>
+  <div class="intro">Pour conserver une cohérence dans l'identité de votre marque, nous avons besoin de toutes les ressources que vous possédez déjà.</div>
+  <div class="perr" id="pe4"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Merci de compléter les champs obligatoires.</div>
+  <div class="fields">
+    <div class="field">
+      <div class="lbl">Avez-vous déjà un logo ?<span class="req">*</span></div>
+      <div class="choices" id="ch_logo">
+        <div class="ci" onclick="rc(this);sc('cd_logo_oui',true);sc('cd_logo_non',false)"><div class="ci-lt">A</div><div class="ci-tx">Oui</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_logo_oui',false);sc('cd_logo_non',true)"><div class="ci-lt">B</div><div class="ci-tx">Non</div></div>
+      </div>
+      <div class="ferr" id="e_logo">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="cond" id="cd_logo_oui">
+      <div class="field">
+        <div class="lbl">Téléversez votre logo<span class="req">*</span></div>
+        <div class="upzone" id="uz_logo" onclick="document.getElementById('fi_logo').click()">
+          <input type="file" id="fi_logo" style="display:none" accept="image/*,.svg,.pdf,.ai,.eps" onchange="uf(this,'uz_logo','ul_logo')">
+          <div class="up-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+          <div class="up-lbl" id="ul_logo"><b>Cliquer pour déposer</b> ou glisser-déposer<br>PNG, JPG, SVG, PDF, AI — max 10 Mo</div>
+        </div>
+      </div>
+    </div>
+    <div class="cond" id="cd_logo_non">
+      <div class="ibox">Pas de problème ! Un carré de dimensions 500×500 sera ajouté en attendant que vous ayez un logo.</div>
+    </div>
+    <hr class="div">
+    <div class="field">
+      <div class="lbl">Avez-vous une charte graphique ?<span class="req">*</span></div>
+      <div class="choices" id="ch_charte">
+        <div class="ci" onclick="rc(this);sc('cd_charte',true)"><div class="ci-lt">A</div><div class="ci-tx">Oui, complète (couleurs, typographies, guidelines...)</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_charte',false)"><div class="ci-lt">B</div><div class="ci-tx">Partielle (quelques éléments seulement)</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_charte',false)"><div class="ci-lt">C</div><div class="ci-tx">Non, c'est à définir</div></div>
+      </div>
+      <div class="ferr" id="e_charte">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="cond" id="cd_charte">
+      <div class="field">
+        <div class="lbl">Déposez votre charte graphique</div>
+        <div class="upzone" id="uz_charte" onclick="document.getElementById('fi_charte').click()">
+          <input type="file" id="fi_charte" style="display:none" accept=".pdf,.ai,.eps,.png,.jpg,.zip" onchange="uf(this,'uz_charte','ul_charte')">
+          <div class="up-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+          <div class="up-lbl" id="ul_charte"><b>Cliquer pour déposer</b><br>PDF, AI, ZIP — max 20 Mo</div>
+        </div>
+      </div>
+    </div>
+    <hr class="div">
+    <div class="field">
+      <div class="lbl">Couleurs principales souhaitées</div>
+      <input type="text" id="f_couleurs" placeholder="Ex : bleu marine #1E3A5F, blanc cassé, une touche de doré">
+      <div class="hint">Codes hex, noms ou description — tout est utile.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Avez-vous déjà vos textes ?<span class="req">*</span></div>
+      <div class="choices" id="ch_textes">
+        <div class="ci" onclick="rc(this);sc('cd_textes_oui',true);sc('cd_textes_non',false)"><div class="ci-lt">A</div><div class="ci-tx">Oui, j'ai tous mes textes rédigés</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_textes_oui',false);sc('cd_textes_non',false)"><div class="ci-lt">B</div><div class="ci-tx">Partiellement — j'en ai quelques-uns</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_textes_oui',false);sc('cd_textes_non',true)"><div class="ci-lt">C</div><div class="ci-tx">Non, je n'ai rien de rédigé</div></div>
+      </div>
+      <div class="ferr" id="e_textes">Veuillez sélectionner une option.</div>
+    </div>
+    <div class="cond" id="cd_textes_oui">
+      <div class="field">
+        <div class="lbl">Déposez vos textes</div>
+        <div class="upzone" id="uz_textes" onclick="document.getElementById('fi_textes').click()">
+          <input type="file" id="fi_textes" style="display:none" accept=".doc,.docx,.pdf,.txt,.pages" onchange="uf(this,'uz_textes','ul_textes')">
+          <div class="up-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+          <div class="up-lbl" id="ul_textes"><b>Cliquer pour déposer</b><br>Word, PDF, TXT — max 20 Mo</div>
+        </div>
+      </div>
+    </div>
+    <div class="cond" id="cd_textes_non">
+      <div class="ibox">Nous nous chargerons de les rédiger avec un copywriting persuasif, en vous laissant ensuite librement la possibilité de les éditer.</div>
+    </div>
+    <hr class="div">
+    <div class="field">
+      <div class="lbl">Avez-vous des photos professionnelles ?<span class="req">*</span></div>
+      <div class="choices" id="ch_photos">
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">A</div><div class="ci-tx">Oui, j'ai des photos professionnelles prêtes</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">B</div><div class="ci-tx">Partiellement — quelques photos seulement</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">C</div><div class="ci-tx">Non — on utilisera des banques d'images</div></div>
+        <div class="ci" onclick="rc(this)"><div class="ci-lt">D</div><div class="ci-tx">Un shooting est prévu / en cours d'organisation</div></div>
+      </div>
+      <div class="ferr" id="e_photos">Veuillez sélectionner une option.</div>
+    </div>
+    <hr class="div">
+    <div class="field">
+      <div class="lbl">Sites qui vous inspirent</div>
+      <input type="text" id="f_insp1" placeholder="Site 1 — ex : notion.so (sobriété, clarté)">
+      <input type="text" id="f_insp2" placeholder="Site 2" style="margin-top:8px">
+      <input type="text" id="f_insp3" placeholder="Site 3" style="margin-top:8px">
+      <div class="hint">Précisez ce qui vous plaît dans chacun — pas juste l'URL.</div>
+    </div>
+    <div class="field">
+      <div class="lbl">Ce que vous ne voulez ABSOLUMENT PAS</div>
+      <textarea id="f_pasvouloir" placeholder="Ex : pas de couleurs trop criardes, pas de photos de stock génériques, pas de design trop chargé, pas de police sans-serif..."></textarea>
+      <div class="hint">Ces contraintes négatives sont aussi précieuses que vos préférences positives.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P5 — SECTIONS ══════════════════════════ -->
+<div class="step" id="p5">
+  <div class="eyebrow">Sections — Page 5 sur 7</div>
+  <div class="ttl">Les sections<br>de votre site</div>
+  <div class="intro">Activez les sections souhaitées puis paramétrez-les. Nos développeurs utilisent ces choix comme plan de construction précis.</div>
+  <div class="perr" id="pe5"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Activez au moins une section pour continuer.</div>
+  <div class="sec-order-hint"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>Cliquez sur le toggle pour activer une section, puis paramétrez-la.</div>
+  <div class="sec-list" id="secList"></div>
+</div>
+
+<!-- ══════════════════════════ P6 — HÉBERGEMENT ══════════════════════════ -->
+<div class="step" id="p6">
+  <div class="eyebrow">Hébergement — Page 6 sur 7</div>
+  <div class="ttl">Hébergement de votre site</div>
+  <div class="intro">
+    Félicitations et merci d'avoir complété ce formulaire.<br><br>
+    Nos équipes vont prendre le soin de le transformer en un site tangible et qui répond pleinement à votre vision.<br><br>
+    → Pour publier votre site en ligne, vous devez posséder 2 choses : le <b>nom de domaine</b> de votre entreprise et un <b>espace en ligne</b> où l'héberger.
+  </div>
+  <div class="perr" id="pe6"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Merci de compléter les choix obligatoires.</div>
+  <div class="fields">
+    <div>
+      <div style="font-size:16px;font-weight:500;color:var(--t);margin-bottom:8px">Nom de domaine</div>
+      <p class="intro" style="margin-bottom:14px">Celui-ci est à votre charge et il vous suffit de payer un abonnement mensuel d'environ une dizaine d'euros pour le posséder. LandingOne agency peut vous aider à le trouver.</p>
+      <div class="choices" id="ch_dom">
+        <div class="ci" onclick="rc(this);sc('cd_dom',false)"><div class="ci-lt">A</div><div class="ci-tx">Je m'occupe de le trouver moi-même pour être sûr qu'il me plaise</div></div>
+        <div class="ci" onclick="rc(this);sc('cd_dom',true)"><div class="ci-lt">B</div><div class="ci-tx">J'ai besoin d'aide, idéalement je voudrais :</div></div>
+      </div>
+      <div class="ferr" id="e_dom">Veuillez sélectionner une option.</div>
+      <div class="cond" id="cd_dom">
+        <input type="text" id="f_dom_souh" placeholder="du type mon-agence.fr ou .com" style="margin-top:10px">
+      </div>
+    </div>
+    <hr class="div">
+    <div>
+      <div style="font-size:16px;font-weight:500;color:var(--t);margin-bottom:8px">Hébergement</div>
+      <p class="intro" style="margin-bottom:8px">Pour posséder pleinement votre site et ne pas dépendre de notre agence, il vous convient de financer vous même votre abonnement chez les hébergeurs reconnus.</p>
+      <p class="intro" style="margin-bottom:14px">Sinon, vous avez la possibilité de nous laisser nous occuper de la maintenance de votre site : vous bénéficiez alors d'un accès mail avec un de nos agents qui s'occupera du bon fonctionnement de l'hébergement (réponses sous 24h et transmission fluide avec les développeurs). Des modifications pourront alors être effectuées selon l'abonnement choisi :</p>
+      <div class="h-cards" id="ch_host">
+        <div class="h-card" onclick="sh(this)">
+          <div class="hck"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div><div class="h-name">Abonnement simple et avantageux — 5€/mois</div><div class="h-desc">Pour un hébergement très simple, fonctionnel et par lequel nous résolvons les potentiels problèmes de présence en ligne pour vous</div></div>
+        </div>
+        <div class="h-card" onclick="sh(this)">
+          <div class="hck"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div><div class="h-name">Abonnement pro — 10€/mois</div><div class="h-desc">Pour un hébergement pleinement fonctionnel, par lequel nous résolvons les potentiels problèmes de présence en ligne et qui vous autorise à des modifications régulières et illimitées sous 48h</div></div>
+        </div>
+        <div class="h-card" onclick="sh(this)">
+          <div class="hck"><svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0b0b0b" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div><div class="h-name">Je préfère gérer l'hébergement moi-même</div><div class="h-desc">Vous choisissez votre hébergeur et gérez vous-même. Nos équipes vous livrent les fichiers du site.</div></div>
+        </div>
+      </div>
+      <div class="ferr" id="e_host">Veuillez choisir une option d'hébergement.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ P7 — CONFIRMATION ══════════════════════════ -->
+<div class="step" id="p7">
+  <div class="eyebrow">Confirmation — Page 7 sur 7</div>
+  <div class="ttl">Vérification finale</div>
+  <div class="intro">Ajoutez un dernier message si nécessaire, puis envoyez votre brief. Dès réception, votre chargé de projet prend le relai.</div>
+  <div class="fields">
+    <div class="field">
+      <div class="lbl">Message complémentaire (optionnel)</div>
+      <textarea id="f_msg" placeholder="Une dernière info ? Un détail important non couvert par le formulaire ?"></textarea>
+    </div>
+    <div style="padding:14px 16px;background:var(--gold-dim);border:.5px solid rgba(200,169,110,.25);border-radius:var(--r);font-size:13px;color:var(--tm);line-height:1.6">
+      ✓ En cliquant sur <b style="color:var(--t)">"Envoyer mon brief"</b>, votre dossier complet est transmis à votre chargé de projet LandingOne. Vous recevrez une confirmation par email dans les minutes suivantes.
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- SUCCESS -->
+<div class="suc" id="suc">
+  <div class="suc-ring"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+  <div class="suc-ttl">Brief envoyé !</div>
+  <div class="suc-sub">LandingOne agency vous remercie. Votre chargé de projet analyse votre dossier et vous contacte dans les 24h.</div>
+  <div class="tl">
+    <div class="tl-r"><div class="tl-n">1</div><div class="tl-t"><b>Aujourd'hui</b> — Confirmation par email</div></div>
+    <div class="tl-r"><div class="tl-n">2</div><div class="tl-t"><b>J+1</b> — Appel de cadrage si besoin (15 min)</div></div>
+    <div class="tl-r"><div class="tl-n">3</div><div class="tl-t"><b>J+3</b> — Première version du site en ligne</div></div>
+    <div class="tl-r"><div class="tl-n">4</div><div class="tl-t"><b>J+7</b> — Révisions &amp; validation finale</div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="ftr" id="ftr">
+  <button class="btn-bk" id="btnBk" onclick="prev()" style="visibility:hidden">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour
+  </button>
+  <button class="btn-nx" id="btnNx" onclick="next()">
+    Page suivante <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// SECTIONS DATA
+// ═══════════════════════════════════════════════════════════
+const SECS = [
+  {id:'nav', name:'Barre de navigation', tag:'Recommandé', on:true,
+   desc:'Menu fixe en haut de page pour guider vos visiteurs.',
+   params:[
+    {lbl:'Style', type:'pills', opts:['Fixe (sticky)','Transparente sur le hero','Classique en haut de page'], radio:true},
+    {lbl:'Contenu', type:'pills', opts:['Logo + liens de navigation','Logo + liens + bouton CTA','Logo seul (minimaliste)'], radio:true},
+  ]},
+  {id:'hero', name:'Hero — Bannière principale', tag:'Recommandé', on:true,
+   desc:'Premier visuel que voit le visiteur — déterminant pour la première impression.',
+   params:[
+    {lbl:'Fond', type:'pills', opts:['Image de fond','Vidéo de fond','Couleur unie','Dégradé','Illustration / pattern'], radio:true},
+    {lbl:'Contenu du hero', type:'pills', opts:['Titre + sous-titre + CTA','Titre + CTA seul','Titre + formulaire inline','Titre + photo / portrait'], radio:true},
+    {lbl:'Texte du bouton CTA', type:'text', placeholder:'Ex : Réserver un appel gratuit'},
+  ]},
+  {id:'about', name:'À propos / Histoire', tag:'Populaire', on:true,
+   desc:'Présentez votre histoire, vos valeurs et votre équipe.',
+   params:[
+    {lbl:'Format', type:'pills', opts:['Texte + photo','Timeline / parcours','Chiffres clés','Texte seul'], radio:true},
+    {lbl:'Angle narratif', type:'pills', opts:['Mon histoire personnelle','L\'histoire de l\'entreprise','Nos valeurs et notre mission','Le problème que j\'ai résolu pour moi-même'], radio:true},
+    {lbl:'Précisions', type:'text', placeholder:'Ex : mettre une photo d\'équipe, insister sur 10 ans d\'expérience...'},
+  ]},
+  {id:'services', name:'Services / Offres', tag:'Essentiel', on:true,
+   desc:'Présentation claire de ce que vous proposez.',
+   params:[
+    {lbl:'Mise en forme', type:'pills', opts:['Cards en grille','Liste détaillée','Tableau comparatif','Accordéon'], radio:true},
+    {lbl:'Nombre d\'offres', type:'pills', opts:['1 offre unique','2-3 offres','4+ offres'], radio:true},
+    {lbl:'Prix visibles ?', type:'pills', opts:['Oui — tarifs affichés','Non — contact pour devis','Prix indicatifs / à partir de'], radio:true},
+    {lbl:'Noms de vos offres', type:'text', placeholder:'Ex : Starter, Pro, Enterprise — ou les noms de vos services'},
+  ]},
+  {id:'social_proof', name:'Preuves sociales / Logos', tag:'Conversion', on:false,
+   desc:'Logos de clients, partenaires ou médias qui vous font confiance.',
+   params:[
+    {lbl:'Type', type:'pills', opts:['Logos clients','Logos partenaires','Logos médias (presse)','Mix'], radio:true},
+    {lbl:'Format', type:'pills', opts:['Bandeau défilant','Grille statique'], radio:true},
+  ]},
+  {id:'testimonials', name:'Témoignages clients', tag:'Conversion', on:true,
+   desc:'Avis clients et preuves sociales pour rassurer vos prospects.',
+   params:[
+    {lbl:'Format', type:'pills', opts:['Cards texte + photo','Carrousel','Citation mise en avant','Étoiles + texte'], radio:true},
+    {lbl:'Source des avis', type:'pills', opts:['Textes fournis par vous','Import Google Reviews','Import Trustpilot','Plusieurs sources'], radio:true},
+    {lbl:'Nombre d\'avis à afficher', type:'pills', opts:['3','4-6','6+'], radio:true},
+  ]},
+  {id:'portfolio', name:'Portfolio / Réalisations', tag:'', on:false,
+   desc:'Galerie de vos travaux, projets ou produits.',
+   params:[
+    {lbl:'Affichage', type:'pills', opts:['Grille photos','Masonry (Pinterest)','Carrousel','Liste avec description'], radio:true},
+    {lbl:'Filtres par catégorie', type:'pills', opts:['Oui','Non'], radio:true},
+    {lbl:'Catégories si applicable', type:'text', placeholder:'Ex : Branding, Web, Motion, Illustration'},
+  ]},
+  {id:'pricing', name:'Tarifs / Pricing', tag:'', on:false,
+   desc:'Page ou section dédiée à vos prix et formules.',
+   params:[
+    {lbl:'Format', type:'pills', opts:['Cards simples','Tableau comparatif','Toggle mensuel/annuel','Tarif unique mis en avant'], radio:true},
+    {lbl:'Texte CTA par offre', type:'text', placeholder:'Ex : Commencer, Je choisis ce plan, Nous contacter'},
+    {lbl:'Badge ou mention', type:'text', placeholder:'Ex : Le plus populaire, Meilleur rapport qualité/prix'},
+  ]},
+  {id:'faq', name:'FAQ', tag:'', on:false,
+   desc:'Questions fréquentes pour lever les objections avant le passage à l\'action.',
+   params:[
+    {lbl:'Style', type:'pills', opts:['Accordéon','Deux colonnes','Questions plates'], radio:true},
+    {lbl:'Thèmes à couvrir', type:'text', placeholder:'Ex : délais, tarifs, processus, garanties, révisions...'},
+  ]},
+  {id:'blog', name:'Blog / Ressources', tag:'', on:false,
+   desc:'Articles pour attirer du trafic organique et éduquer votre audience.',
+   params:[
+    {lbl:'Format d\'affichage', type:'pills', opts:['Grille d\'articles','Liste avec extrait','Article mis en avant + grille'], radio:true},
+    {lbl:'Catégories souhaitées', type:'text', placeholder:'Ex : Conseils, Actualités, Études de cas...'},
+  ]},
+  {id:'contact', name:'Contact / Formulaire', tag:'Recommandé', on:true,
+   desc:'Permettez à vos visiteurs de vous contacter facilement.',
+   params:[
+    {lbl:'Type de contact', type:'pills', opts:['Formulaire simple','Formulaire + carte + infos','Prise de RDV (Calendly)','Email et téléphone affichés seulement'], radio:true},
+    {lbl:'Champs du formulaire', type:'text', placeholder:'Ex : Nom, email, téléphone, message, budget, type de projet'},
+  ]},
+  {id:'map', name:'Carte géographique', tag:'', on:false,
+   desc:'Pour les activités locales — affichez votre localisation.',
+   params:[
+    {lbl:'Affichage', type:'pills', opts:['Google Maps intégré','Carte + adresse + horaires','Carte seule'], radio:true},
+  ]},
+  {id:'cta', name:'Section Appel à l\'action', tag:'Conversion', on:true,
+   desc:'Section dédiée à convertir le visiteur au moment clé.',
+   params:[
+    {lbl:'Style', type:'pills', opts:['Bandeau plein écran','Section centrée sobre','Sticky bottom bar'], radio:true},
+    {lbl:'Texte CTA principal', type:'text', placeholder:'Ex : Réservez ma consultation gratuite'},
+    {lbl:'Élément de réassurance', type:'text', placeholder:'Ex : Sans engagement · Réponse sous 24h · 100% gratuit'},
+    {lbl:'Urgence / incentive', type:'pills', opts:['Aucun','Places limitées','Offre à durée limitée','Bonus offert'], radio:true},
+  ]},
+  {id:'footer', name:'Pied de page', tag:'Recommandé', on:true,
+   desc:'Navigation secondaire, liens légaux, réseaux sociaux.',
+   params:[
+    {lbl:'Contenu', type:'pills', opts:['Logo + liens + réseaux','Logo + colonnes de liens','Avec newsletter intégrée','Minimaliste (copyright seul)'], radio:true},
+  ]},
+  {id:'autre', name:'Section sur-mesure', tag:'Personnalisé', on:false,
+   desc:'Une idée qui ne rentre dans aucune des catégories ci-dessus.',
+   params:[
+    {lbl:'Décrivez votre section en détail', type:'textarea', placeholder:'Ex : Un comparateur interactif, un quiz, un bandeau de logos partenaires, une vidéo d\'ambiance en fond, un module de simulateur de prix...'},
+    {lbl:'Objectif de cette section', type:'pills', opts:['Rassurer / preuve sociale','Convertir / vendre','Informer / éduquer','Créer une expérience mémorable'], radio:false},
+  ]},
+];
+
+// BUILD PAGE 5
+function buildSecs(){
+  const list = document.getElementById('secList');
+  list.innerHTML = '';
+  SECS.forEach(s => {
+    const c = document.createElement('div');
+    c.className = 'sec-card ' + (s.on ? 'on' : 'off');
+    c.id = 'sc_' + s.id;
+
+    let bodyHTML = `<div class="sec-desc">${s.desc}</div><div class="sec-body"><div style="display:flex;flex-direction:column;gap:14px">`;
+    s.params.forEach((p,pi) => {
+      bodyHTML += `<div class="param-group"><div class="param-lbl">${p.lbl}</div>`;
+      if(p.type === 'pills'){
+        const isRadio = p.radio !== false;
+        const fn = isRadio ? `spRadio(this,'${s.id}',${pi})` : `spToggle(this)`;
+        bodyHTML += `<div class="pills" id="sp_${s.id}_${pi}">` + p.opts.map(o => `<span class="pill" onclick="${fn}">${o}</span>`).join('') + `</div>`;
+      } else if(p.type === 'text'){
+        bodyHTML += `<input type="text" class="sec-inp" id="si_${s.id}_${pi}" placeholder="${p.placeholder}">`;
+      } else if(p.type === 'textarea'){
+        bodyHTML += `<textarea class="sec-inp sec-ta" id="si_${s.id}_${pi}" placeholder="${p.placeholder}"></textarea>`;
+      }
+      bodyHTML += `</div>`;
+    });
+    bodyHTML += `</div></div>`;
+
+    const tagHTML = s.tag ? `<span class="sec-tag">${s.tag}</span>` : '';
+    c.innerHTML = `
+      <div class="sec-hd" onclick="toggleSec('${s.id}')">
+        <div class="tog" id="tog_${s.id}"></div>
+        <span class="sec-title">${s.name}</span>
+        ${tagHTML}
+      </div>
+      ${bodyHTML}`;
+    list.appendChild(c);
+  });
+}
+
+function toggleSec(id){
+  const c = document.getElementById('sc_'+id);
+  const on = c.classList.toggle('on');
+  c.classList.toggle('off', !on);
+}
+
+// Radio pill group — only one selected per group
+function spRadio(el, sid, pi){
+  const container = document.getElementById(`sp_${sid}_${pi}`);
+  container.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+}
+// Toggle pill (multi-select)
+function spToggle(el){ el.classList.toggle('on'); }
+
+// ═══════════════════════════════════════════════════════════
+// VALIDATION
+// ═══════════════════════════════════════════════════════════
+const RULES = {
+  1:[
+    {id:'f_nom',err:'e_nom',type:'text'},
+    {id:'f_mail',err:'e_mail',type:'email'},
+    {id:'f_act',err:'e_act',type:'text'},
+    {id:'ch_exp',err:'e_exp',type:'choice'},
+    {id:'ch_ancsite',err:'e_ancsite',type:'choice'},
+  ],
+  2:[
+    {id:'f_sitenom',err:'e_sitenom',type:'text'},
+    {id:'f_obj',err:'e_obj',type:'text'},
+    {id:'f_action',err:'e_action',type:'text'},
+    {id:'f_pvu',err:'e_pvu',type:'text'},
+    {id:'f_age',err:'e_age',type:'text'},
+    {id:'f_prof',err:'e_prof',type:'text'},
+    {id:'f_rev',err:'e_rev',type:'text'},
+    {id:'f_pb',err:'e_pb',type:'text'},
+    {id:'f_sans',err:'e_sans',type:'text'},
+    {id:'f_meilleur',err:'e_meilleur',type:'text'},
+    {id:'ch_qual',err:'e_qual',type:'choice'},
+    {id:'ch_zone',err:'e_zone',type:'choice'},
+    {id:'ch_ton',err:'e_ton',type:'choice'},
+  ],
+  3:[
+    {id:'ch_delai',err:'e_delai',type:'choice'},
+  ],
+  4:[
+    {id:'ch_logo',err:'e_logo',type:'choice'},
+    {id:'ch_charte',err:'e_charte',type:'choice'},
+    {id:'ch_textes',err:'e_textes',type:'choice'},
+    {id:'ch_photos',err:'e_photos',type:'choice'},
+  ],
+  5:[], // custom
+  6:[
+    {id:'ch_dom',err:'e_dom',type:'choice'},
+    {id:'ch_host',err:'e_host',type:'hosting'},
+  ],
+  7:[],
+};
+
+function validate(n){
+  if(n===5){
+    const ok = !!document.querySelector('.sec-card.on');
+    document.getElementById('pe5').classList.toggle('on',!ok);
+    return ok;
+  }
+  const rules = RULES[n]||[];
+  let ok = true;
+  rules.forEach(r => {
+    let v = true;
+    if(r.type==='text'){
+      const el=document.getElementById(r.id);
+      v = el && el.value.trim()!=='';
+      if(el) el.classList.toggle('err',!v);
+    } else if(r.type==='email'){
+      const el=document.getElementById(r.id);
+      v = el && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+      if(el) el.classList.toggle('err',!v);
+    } else if(r.type==='choice'){
+      const el=document.getElementById(r.id);
+      v = el && !!el.querySelector('.ci.sel');
+      if(el) el.classList.toggle('err',!v);
+    } else if(r.type==='hosting'){
+      v = !!document.querySelector('#ch_host .h-card.sel');
+    }
+    const ee=document.getElementById(r.err);
+    if(ee) ee.classList.toggle('on',!v);
+    if(!v) ok=false;
+  });
+  const pe=document.getElementById('pe'+n);
+  if(pe) pe.classList.toggle('on',!ok);
+  return ok;
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+const TOTAL=7;
+let cur=1;
+
+const dotsEl=document.getElementById('dots');
+for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot';d.id='dt'+i;dotsEl.appendChild(d);}
+
+function ui(){
+  for(let i=1;i<=TOTAL;i++){const d=document.getElementById('dt'+i);d.className='dot'+(i===cur?' a':i<cur?' d':'');}
+  document.getElementById('pfill').style.width=(cur/TOTAL*100)+'%';
+  document.getElementById('pglbl').textContent='Page '+cur+' sur '+TOTAL;
+  document.getElementById('btnBk').style.visibility=cur>1?'visible':'hidden';
+  const bn=document.getElementById('btnNx');
+  bn.innerHTML = cur===TOTAL
+    ? 'Envoyer mon brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="14" height="14"><path d="M20 6L9 17l-5-5"/></svg>'
+    : 'Page suivante <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+}
+
+function next(){
+  if(!validate(cur)) return;
+  if(cur===TOTAL){
+    submit();
+    return;
+  }
+  document.getElementById('p'+cur).classList.remove('on');
+  cur++;
+  document.getElementById('p'+cur).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  ui();
+}
+function prev(){
+  if(cur<=1) return;
+  document.getElementById('p'+cur).classList.remove('on');
+  cur--;
+  document.getElementById('p'+cur).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  ui();
+}
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+function rc(el){el.closest('.choices').querySelectorAll('.ci').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
+function tc(el){el.classList.toggle('on');}
+function sc(id,show){const el=document.getElementById(id);if(el)el.classList.toggle('on',show);}
+function sh(el){document.querySelectorAll('#ch_host .h-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
+function uf(inp,zid,lid){const f=inp.files[0];if(f){document.getElementById(zid).classList.add('done');document.getElementById(lid).innerHTML=`<b style="color:var(--gold)">${f.name}</b><br><span style="font-size:11px;opacity:.5">${Math.round(f.size/1024)} Ko</span>`;}}
+function gv(id){return(document.getElementById(id)||{}).value||'';}
+function gc(id){return document.querySelector('#'+id+' .ci.sel')?.querySelector('.ci-tx')?.textContent||'—';}
+function gck(id){return[...document.querySelectorAll('#'+id+' .ck.on')].map(e=>e.textContent.trim()).join(', ')||'Aucune';}
+
+// ═══════════════════════════════════════════════════════════
+// SECTIONS SUMMARY
+// ═══════════════════════════════════════════════════════════
+function secSummary(){
+  const lines=[];
+  SECS.forEach(s=>{
+    const c=document.getElementById('sc_'+s.id);
+    if(!c||!c.classList.contains('on')) return;
+    const opts=[];
+    s.params.forEach((p,pi)=>{
+      if(p.type==='pills'){
+        const sel=[...document.querySelectorAll(`#sp_${s.id}_${pi} .pill.on`)].map(e=>e.textContent);
+        if(sel.length) opts.push(...sel);
+      } else {
+        const v=gv(`si_${s.id}_${pi}`);
+        if(v) opts.push(v);
+      }
+    });
+    lines.push({name:s.name, opts});
+  });
+  return lines;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SUBMIT — Formspree (envoi HTTP fiable, sans client mail)
+// ═══════════════════════════════════════════════════════════
+// ▶ ÉTAPE 1 : Créer un compte gratuit sur https://formspree.io
+// ▶ ÉTAPE 2 : Créer un nouveau formulaire → copier l'endpoint
+// ▶ ÉTAPE 3 : Remplacer l'URL ci-dessous par ton endpoint
+//   Ex : https://formspree.io/f/xpwzabcd
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mlgaznnr';
+
+async function submit(){
+  const secs = secSummary();
+  const secsText = secs.map(s=>`  • ${s.name}${s.opts.length?' → '+s.opts.join(' | '):''}` ).join('\n');
+  const host = document.querySelector('#ch_host .h-card.sel')?.querySelector('.h-name')?.textContent||'—';
+  const dom = gc('ch_dom') + (gv('f_dom_souh')?' ('+gv('f_dom_souh')+')':'');
+
+  const brief = `
+╔══════════════════════════════════════════════╗
+   BRIEF CLIENT — LANDINGONE AGENCY
+╚══════════════════════════════════════════════╝
+
+▌ INFORMATIONS CLIENT
+  Nom          : ${gv('f_nom')}
+  Entreprise   : ${gv('f_ent')||'—'}
+  Email        : ${gv('f_mail')}
+  Téléphone    : ${gv('f_tel')||'—'}
+  Activité     : ${gv('f_act')}
+  Expérience   : ${gc('ch_exp')}
+  Site existant: ${gc('ch_ancsite')}${gv('f_anclien')?' → '+gv('f_anclien'):''}
+  Pb site actuel: ${gv('f_ancpb')||'—'}
+
+▌ VISION
+  Nom du site    : ${gv('f_sitenom')}
+  Objectif       : ${gv('f_obj')}
+  Action visiteur: ${gv('f_action')}
+  PVU            : ${gv('f_pvu')}
+  Slogan         : ${gv('f_slogan')||'—'}
+
+▌ AVATAR CLIENT
+  Âge          : ${gv('f_age')}
+  Profession   : ${gv('f_prof')}
+  Revenu moyen : ${gv('f_rev')}
+  Zone cible   : ${gv('f_geo_cible')||'—'}
+  Problème n°1 : ${gv('f_pb')}
+  Alt. sans lui : ${gv('f_sans')}
+  Pourquoi meilleur: ${gv('f_meilleur')}
+
+▌ POSITIONNEMENT
+  Qualité     : ${gc('ch_qual')}
+  Zone géo    : ${gc('ch_zone')}
+  Ton         : ${gc('ch_ton')}
+
+▌ FONCTIONNALITÉS
+  Base      : ${gck('ck_fonc')}
+  Premium   : ${gck('ck_prem')}
+  Autre     : ${gv('f_autrefonc')||'—'}
+  Délai     : ${gc('ch_delai')}
+  Date idéale: ${gv('f_dateideal')||'—'}
+
+▌ RESSOURCES
+  Logo       : ${gc('ch_logo')}
+  Charte     : ${gc('ch_charte')}
+  Couleurs   : ${gv('f_couleurs')||'—'}
+  Textes     : ${gc('ch_textes')}
+  Photos     : ${gc('ch_photos')}
+  Inspi 1    : ${gv('f_insp1')||'—'}
+  Inspi 2    : ${gv('f_insp2')||'—'}
+  Inspi 3    : ${gv('f_insp3')||'—'}
+  À éviter   : ${gv('f_pasvouloir')||'—'}
+
+▌ SECTIONS ACTIVÉES (${secs.length})
+${secsText||'  —'}
+
+▌ HÉBERGEMENT
+  Domaine    : ${dom}
+  Abonnement : ${host}
+
+▌ MESSAGE COMPLÉMENTAIRE
+  ${gv('f_msg')||'—'}
+
+──────────────────────────────────────────────
+Brief généré le ${new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
+  `.trim();
+
+  // — État de chargement sur le bouton
+  const btn = document.getElementById('btnNx');
+  btn.disabled = true;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14" style="animation:spin .8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Envoi en cours…';
+
+  // — Masquer une éventuelle erreur précédente
+  let errBox = document.getElementById('submit-err');
+  if(errBox) errBox.style.display='none';
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        _subject: '🚀 Nouveau brief — ' + (gv('f_sitenom') || gv('f_nom')),
+        _replyto: gv('f_mail'),
+        brief: brief
+      })
+    });
+
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+
+    // — Succès : afficher l'écran de confirmation
+    document.getElementById('p'+cur).classList.remove('on');
+    document.getElementById('ftr').style.display='none';
+    document.getElementById('suc').classList.add('on');
+    document.getElementById('pfill').style.width='100%';
+    for(let i=1;i<=TOTAL;i++) document.getElementById('dt'+i).className='dot d';
+    window.scrollTo({top:0,behavior:'smooth'});
+
+  } catch(e) {
+    // — Erreur : réafficher le bouton + message
+    btn.disabled = false;
+    btn.innerHTML = 'Envoyer mon brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="14" height="14"><path d="M20 6L9 17l-5-5"/></svg>';
+
+    if(!errBox){
+      errBox = document.createElement('div');
+      errBox.id = 'submit-err';
+      errBox.style.cssText = 'margin-top:14px;padding:11px 14px;border-radius:8px;border:.5px solid rgba(217,95,95,.35);background:rgba(217,95,95,.07);color:#d95f5f;font-size:13px;display:flex;align-items:center;gap:9px';
+      errBox.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#d95f5f" stroke-width="1.5" stroke-linecap="round" width="15" height="15" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span>Une erreur est survenue lors de l\'envoi. Vérifie ta connexion et réessaie, ou envoie le brief manuellement à <b>contact@landingone.fr</b>.</span>';
+      document.getElementById('ftr').insertAdjacentElement('beforebegin', errBox);
+    } else {
+      errBox.style.display='flex';
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+buildSecs();
+ui();
+</script>
+</body>
+</html>
